@@ -12,38 +12,57 @@ int main(int argc, char **argv) {
    struct pcap_pkthdr *header;
    const u_char *data;
    char errbuf[PCAP_ERRBUF_SIZE];
-   int type;
+   int type, count = 1;
 
    if (argc != 2) {
       printf("Error: Must have one argument (PCAP File)\n");
    }
    trace = pcap_open_offline(argv[1], errbuf);
-   pcap_next_ex(trace, &header, &data);
+   while(pcap_next_ex(trace, &header, &data) == 1) {
 
-   type = ethernet(trace);
+      printf("\nPacket number: %d  Packet Len: %d\n", count++, header->len);
+      ethernet(data);
 
+   }
    pcap_close(trace);
 
    return 0;
 }
 
-static int ethernet(pcap_t *trace) {
+void ethernet(const u_char *data) {
+   struct ethernet_header *eheader;
+   eheader = (struct ethernet_header *)data;
+
+   printf("\nEthernet Header Output:\n\n");
+   printf("Dest MAC: %s\n", ether_ntoa((struct ether_addr *)eheader->dest));
+   printf("Source MAC: %s\n", ether_ntoa((struct ether_addr *)eheader->src));
+   printf("Type: ");
+
+   if (eheader->type == ARP) {
+      printf("ARP\n");
+   }
+   else if (eheader->type == IP) {
+      printf("IP\n");
+      ip(data);
+   }
+   else {
+      printf("Unknown\n");
+   }
+}
+
+void ip(const u_char *data) {
 
 }
 
-static void ip() {
+void tcp() {
 
 }
 
-static void tcp() {
+void arp() {
 
 }
 
-static void arp() {
-
-}
-
-static void icmp() {
+void icmp() {
 
 }
 
