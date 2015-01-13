@@ -5,6 +5,8 @@
  * Date: January 12, 2015
  */
 
+#include "trace.h"
+
 int main(int argc, char *args) {
    return 0;
 }
