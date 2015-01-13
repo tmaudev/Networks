@@ -1,5 +1,7 @@
 /* Trace Program Header
  */
 
-#include <pcap/pcap.h>
+#include <pcap.h>
+#include <stdio.h>
+#include <stdlib.h>
 
