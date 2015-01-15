@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
    struct pcap_pkthdr *header;
    const u_char *data;
    char errbuf[PCAP_ERRBUF_SIZE];
-   int type, count = 1;
+   int count = 1;
 
    if (argc != 2) {
       printf("Error: Must have one argument (PCAP File)\n");
@@ -104,8 +104,8 @@ char *protocolType(u_char protocol) {
 
 void tcp(const u_char *data, int opt) {
    struct tcp_header *tcp;
-   struct ip_header *ip;
-   ip = (struct ip_header *)(data + ETHERNET_SIZE);
+   //struct ip_header *ip;
+   //ip = (struct ip_header *)(data + ETHERNET_SIZE);
    tcp = (struct tcp_header *)(data + ETHERNET_SIZE + sizeof(struct ip_header) + opt);
 
    printf("   \nTCP Header\n");

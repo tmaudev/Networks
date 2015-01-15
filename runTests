@@ -1,5 +1,5 @@
 echo Compiling...
-gcc trace.c checksum.c -lpcap -o trace
+make
 echo Ping Test...
 ./trace TraceFiles/PingTest.pcap > PingTest.out
 diff -B -w PingTest.out TraceFiles/PingTest.out.txt
@@ -9,8 +9,8 @@ echo UDP Test...
 diff -B -w UDPTest.out TraceFiles/UDPfile.out.txt
 
 echo ARP Test...
-./trace TraceFiles/ARPTest.pcap > ARPTest.out
-diff -B -w ARPTest.out TraceFiles/ARPTest.out.txt
+./trace TraceFiles/ArpTest.pcap > ARPTest.out
+diff -B -w ARPTest.out TraceFiles/ArpTest.out.txt
 
 echo IP Test...
 ./trace TraceFiles/IP_bad_checksum.pcap > IPTest.out

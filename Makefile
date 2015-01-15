@@ -30,7 +30,7 @@ endif
 all:  trace-$(EXEC_SUFFIX)
 
 trace-$(EXEC_SUFFIX): trace.c
-	$(CC) $(CFLAGS) $(OSINC) $(OSLIB) $(OSDEF) -lpcap -o $@ trace.c checksum.c
+	$(CC) $(CFLAGS) $(OSINC) $(OSLIB) $(OSDEF) -lpcap -o trace trace.c checksum.c
 
 clean:
-	rm -f trace-*
+	rm -f trace
