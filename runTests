@@ -1,4 +1,5 @@
 echo Compiling...
+make clean
 make
 echo Ping Test...
 ./trace TraceFiles/PingTest.pcap > PingTest.out
@@ -16,18 +17,18 @@ echo IP Test...
 ./trace TraceFiles/IP_bad_checksum.pcap > IPTest.out
 diff -B -w IPTest.out TraceFiles/IP_bad_checksum.out.txt
 
-#echo TCP Test...
-#./trace TraceFiles/TCP_bad_checksum.pcap > TCPTest.out
-#diff -B -w TCPTest.out TraceFiles/TCP_bad_checksum.out.txt
+echo TCP Test...
+./trace TraceFiles/TCP_bad_checksum.pcap > TCPTest.out
+diff -B -w TCPTest.out TraceFiles/TCP_bad_checksum.out.txt
 
-#echo Large Mix 1 Test...
-#./trace TraceFiles/largeMix.pcap > LMTest.out
-#diff -B -w LMTest.out TraceFiles.largeMix.out.txt
+echo Large Mix 1 Test...
+./trace TraceFiles/largeMix.pcap > LMTest.out
+diff -B -w LMTest.out TraceFiles/largeMix.out.txt
 
-#echo Large Mix 2 Test
-#./trace TraceFiles/largeMix2.pcap > LM2Test.out
-#diff -B -w LM2Test.out TraceFiles/largeMix2.out.txt
+echo Large Mix 2 Test
+./trace TraceFiles/largeMix2.pcap > LM2Test.out
+diff -B -w LM2Test.out TraceFiles/largeMix2.out.txt
 
-#echo Small TCP Test...
-#./trace TraceFiles/smallTCP.pcap > STCPTest.out
-#diff -B -w STCPTest.out TraceFiles/smallTCP.out.txt
+echo Small TCP Test...
+./trace TraceFiles/smallTCP.pcap > STCPTest.out
+diff -B -w STCPTest.out TraceFiles/smallTCP.out.txt
