@@ -33,7 +33,7 @@ void ethernet(const u_char *data) {
    struct ethernet_header *eheader;
    eheader = (struct ethernet_header *)data;
 
-   printf("\n   Ethernet Header Output:\n\n");
+   printf("\n   Ethernet Header\n");
    printf("      Dest MAC: %s\n", ether_ntoa((struct ether_addr *)eheader->dest));
    printf("      Source MAC: %s\n", ether_ntoa((struct ether_addr *)eheader->src));
    printf("      Type: ");
@@ -77,6 +77,7 @@ void ip(const u_char *data) {
    opt = ((ip->vers & MASK) << 2) - sizeof(struct ip_header);
 
    if (ip->protocol == TCP) {
+      tcp(data, opt);
    }
    else if (ip->protocol == UDP) {
       udp(data, opt);
@@ -101,8 +102,55 @@ char *protocolType(u_char protocol) {
    }
 }
 
-void tcp() {
+void tcp(const u_char *data, int opt) {
+   struct tcp_header *tcp;
+   struct ip_header *ip;
+   ip = (struct ip_header *)(data + ETHERNET_SIZE);
+   tcp = (struct tcp_header *)(data + ETHERNET_SIZE + sizeof(struct ip_header) + opt);
 
+   printf("   \nTCP Header\n");
+   printf("      Source Port: ");
+
+   if (!strcmp(tcpType(tcp->src), "")) {
+      printf("%d\n", tcp->src);
+   }
+   else {
+      printf("%s\n", tcpType(tcp->src));
+   }
+
+   printf("      Destination Port: ");
+
+   if (!strcmp(tcpType(tcp->dest), "")) {
+      printf("%d\n", tcp->dest);
+   }
+   else {
+      printf("%s\n", tcpType(tcp->src));
+   }
+
+   printf("      Sequence Number: %u\n", ntohl(tcp->seq));
+   printf("      ACK Number: %u\n", ntohl(tcp->ack));
+}
+
+char *tcpType(u_char port) {
+
+   if (port == HTTP) {
+      return "HTTP";
+   }
+   else if (port == TELNET) {
+      return "TELNET";
+   }
+   else if (port == FTP) {
+      return "FTP";
+   }
+   else if (port == POP3) {
+      return "POP3";
+   }
+   else if (port == SMTP) {
+      return "SMTP";
+   }
+   else {
+      return "";
+   }
 }
 
 void udp(const u_char *data, int opt) {

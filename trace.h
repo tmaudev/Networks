@@ -25,6 +25,11 @@
 #define ICMP_REQUEST 8
 #define ICMP_REPLY 0
 #define MASK 0x0F
+#define HTTP 80
+#define TELNET 23
+#define FTP 20
+#define POP3 110
+#define SMTP 25
 
 struct ethernet_header {
 	char dest[MAC_LEN];
@@ -57,6 +62,18 @@ struct ip_header {
 	struct in_addr dest;
 }__attribute__((packed));
 
+struct tcp_header {
+	uint16_t src;
+	uint16_t dest;
+	uint32_t seq;
+	uint32_t ack;
+	u_char offset;
+	u_char flags;
+	uint16_t window;
+	uint16_t checksum;
+	uint16_t	up;
+}__attribute__((packed));
+
 struct udp_header {
 	uint16_t src;
 	uint16_t dest;
@@ -73,6 +90,8 @@ struct icmp_header {
 void ethernet(const u_char *data);
 void arp(const u_char *data);
 void ip(const u_char *data);
+void tcp(const u_char *data, int opt);
+char *tcpType(u_char port);
 void udp(const u_char *data, int opt);
 void icmp(const u_char *data, int opt);
 char *protocolType(u_char protocol);

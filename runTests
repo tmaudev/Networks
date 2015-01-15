@@ -1,0 +1,33 @@
+echo Compiling...
+gcc trace.c checksum.c -lpcap -o trace
+echo Ping Test...
+./trace TraceFiles/PingTest.pcap > PingTest.out
+diff -B -w PingTest.out TraceFiles/PingTest.out.txt
+
+echo UDP Test...
+./trace TraceFiles/UDPfile.pcap > UDPTest.out
+diff -B -w UDPTest.out TraceFiles/UDPfile.out.txt
+
+echo ARP Test...
+./trace TraceFiles/ARPTest.pcap > ARPTest.out
+diff -B -w ARPTest.out TraceFiles/ARPTest.out.txt
+
+echo IP Test...
+./trace TraceFiles/IP_bad_checksum.pcap > IPTest.out
+diff -B -w IPTest.out TraceFiles/IP_bad_checksum.out.txt
+
+#echo TCP Test...
+#./trace TraceFiles/TCP_bad_checksum.pcap > TCPTest.out
+#diff -B -w TCPTest.out TraceFiles/TCP_bad_checksum.out.txt
+
+#echo Large Mix 1 Test...
+#./trace TraceFiles/largeMix.pcap > LMTest.out
+#diff -B -w LMTest.out TraceFiles.largeMix.out.txt
+
+#echo Large Mix 2 Test
+#./trace TraceFiles/largeMix2.pcap > LM2Test.out
+#diff -B -w LM2Test.out TraceFiles/largeMix2.out.txt
+
+#echo Small TCP Test...
+#./trace TraceFiles/smallTCP.pcap > STCPTest.out
+#diff -B -w STCPTest.out TraceFiles/smallTCP.out.txt
